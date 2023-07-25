@@ -4,7 +4,7 @@ import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
 
-export default function Create({number, datas, addButtonClickHandler}) {
+export default function Create({number, addButtonClickHandler}) {
   const navigate = useNavigate();
   // 추가 데이터 담아줄 state 선언
   const [createdData, setCreatedData] = useState({

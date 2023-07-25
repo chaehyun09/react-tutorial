@@ -82,7 +82,6 @@ function App() {
         element={
           <Create
             number={number}
-            datas={datas}
             addButtonClickHandler={addButtonClickHandler}
           />
         }
