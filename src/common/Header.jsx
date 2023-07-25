@@ -19,6 +19,8 @@ export default function Header() {
           color: "gray",
           cursor: "pointer",
         }}
+        // 로고 클릭하면 홈으로 이동
+        onClick={() => {navigate("/")}}
       >
         <FaHome />
       </h1>

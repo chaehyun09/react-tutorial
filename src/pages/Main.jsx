@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
 
-export default function Main() {
+
+export default function Main({datas, deleteButtonClickHandler}) {
+  // props로 datas 넘겨주기. props는 객체로 받아오니까 구조분해할당으로.
   const navigate = useNavigate();
+ 
   return (
     <>
       <Header />
@@ -32,9 +35,10 @@ export default function Main() {
             추가
           </button>
         </div>
-        {[1, 2, 3, 4].map((item) => (
+        {datas.map((d) => (
+          // map으로 배열에 들어있는 요소들을 하나하나 돌면서 map안에 있는 콜백함수를 실행해줌
           <div
-            key={item}
+            key={d.id}
             style={{
               backgroundColor: "#EEEEEE",
               height: "100px",
@@ -46,7 +50,11 @@ export default function Main() {
           >
             <div
               onClick={() => {
-                navigate("/detail/1");
+                // 클릭하면 각 아이디에 맞게 상세페이지 그려줄 수 있게끔
+                // app.js에서 route path를 '/detail/:id'로 해주고
+                // 여기서 id값 넘겨준 다음
+                // 디테일 페이지에서 일치하는 애들끼리 그려주게
+                navigate(`/detail/${d.id}`);
               }}
               style={{
                 flex: 4,
@@ -54,7 +62,7 @@ export default function Main() {
                 cursor: "pointer",
               }}
             >
-              <h2>제목</h2>
+              <h2>{d.title}</h2>
               <p
                 style={{
                   width: "300px",
@@ -63,10 +71,7 @@ export default function Main() {
                   whiteSpace: "nowrap",
                 }}
               >
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem
-                ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum
-                dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor,
-                sit amet consectetur adipisicing elit.
+                {d.content}
               </p>
             </div>
             <div
@@ -79,11 +84,11 @@ export default function Main() {
                 gap: "12px",
               }}
             >
-              <div>작성자</div>
+              <div>{d.author}</div>
               <div>
                 <button
                   onClick={() => {
-                    navigate("/edit");
+                    navigate(`/edit/${d.id}`);
                   }}
                   style={{
                     border: "none",
@@ -99,7 +104,7 @@ export default function Main() {
                 </button>
                 <button
                   onClick={() => {
-                    alert("삭제할까?");
+                    deleteButtonClickHandler(d.id)
                   }}
                   style={{
                     border: "none",
