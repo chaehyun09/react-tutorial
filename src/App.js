@@ -9,7 +9,7 @@ import { useState } from "react";
 
 function App() {
   // 데이터를 메인페이지에서도 써야 하고 수정페이지, 디테일페이지에서도 써야 하니까 부모에서 선언해줌
-  const number = 4;
+  let number = 4;
   const [datas, setDatas] = useState([
     {
       id: 1,
