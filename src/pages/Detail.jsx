@@ -2,9 +2,14 @@ import React from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export default function Detail() {
+export default function Detail({datas, deleteButtonClickHandler}) {
   const navigate = useNavigate();
+  // url parameter에서 아이디값을 가지고와서 id로 선언해줌
+  const {id} = useParams();
+  // 위에서 선언해준 아이디와 아이디가 일치하는 데이터를 찾아서 선언
+  const data = datas.find((d) => d.id === Number(id))
   return (
     <>
       <Header />
@@ -16,7 +21,7 @@ export default function Detail() {
             padding: "12px",
           }}
         >
-          제목
+          {data.title}
         </h1>
         <div
           style={{
@@ -26,10 +31,7 @@ export default function Detail() {
             padding: "12px",
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad doloribus
-          blanditiis vitae sapiente. Expedita delectus nihil animi pariatur,
-          labore quod officiis dolor fugit. Mollitia quod, delectus velit
-          deleniti nihil veniam!
+          {data.content}
         </div>
         <div
           style={{
@@ -40,7 +42,7 @@ export default function Detail() {
         >
           <button
             onClick={() => {
-              navigate("/edit");
+              navigate(`/edit/${data.id}`);
             }}
             style={{
               border: "none",
@@ -56,7 +58,8 @@ export default function Detail() {
           </button>
           <button
             onClick={() => {
-              alert("삭제할까?");
+              deleteButtonClickHandler(data.id)
+              navigate("/")
             }}
             style={{
               border: "none",
