@@ -1,9 +1,18 @@
 import React from "react";
-
+import { useState } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { useNavigate } from "react-router-dom";
 
-export default function Create() {
+export default function Create({datas, addButtonClickHandler}) {
+  const navigate = useNavigate();
+  // 추가 데이터 담아줄 state 선언
+  const [createdData, setCreatedData] = useState({
+    id: datas.length+1,
+    title: "",
+    content: "",
+    author: "",
+  })
   return (
     <>
       <Header />
@@ -17,7 +26,8 @@ export default function Create() {
           }}
           onSubmit={(e) => {
             e.preventDefault();
-            console.log("제출!");
+            addButtonClickHandler(createdData)
+            navigate('/')
           }}
         >
           <div>
@@ -32,6 +42,9 @@ export default function Create() {
                 padding: "8px",
                 boxSizing: "border-box",
               }}
+              value={createdData.title}
+              // 입력 일어나면 입력된 내용을 createdData의 title에 담아주기
+              onChange={(e) => setCreatedData({...createdData, title: e.target.value})}
             />
           </div>
           <div
@@ -51,6 +64,9 @@ export default function Create() {
                 padding: "12px",
                 boxSizing: "border-box",
               }}
+              value={createdData.content}
+              // 입력 일어나면 입력된 내용을 createdData의 content에 담아주기
+              onChange={(e) => setCreatedData({...createdData, content: e.target.value})}
             />
           </div>
           <button

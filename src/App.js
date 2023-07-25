@@ -49,6 +49,10 @@ function App() {
     setDatas(newDatas);
   };
 
+  const addButtonClickHandler = (data) => {
+    setDatas([...datas, data]);
+  };
+
   return (
     // 페이지 이동에 사용되는 Route 태그를 위해선 Routes로 먼저 감싸야 한다.
     <Routes>
@@ -71,7 +75,12 @@ function App() {
           />
         }
       />
-      <Route path="/create" element={<Create />} />
+      <Route
+        path="/create"
+        element={
+          <Create datas={datas} addButtonClickHandler={addButtonClickHandler} />
+        }
+      />
       <Route
         path="/edit/:id"
         element={
