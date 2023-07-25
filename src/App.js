@@ -9,6 +9,7 @@ import { useState } from "react";
 
 function App() {
   // 데이터를 메인페이지에서도 써야 하고 수정페이지, 디테일페이지에서도 써야 하니까 부모에서 선언해줌
+  const number = 4;
   const [datas, setDatas] = useState([
     {
       id: 1,
@@ -51,6 +52,7 @@ function App() {
 
   const addButtonClickHandler = (data) => {
     setDatas([...datas, data]);
+    number += 1;
   };
 
   return (
@@ -78,7 +80,11 @@ function App() {
       <Route
         path="/create"
         element={
-          <Create datas={datas} addButtonClickHandler={addButtonClickHandler} />
+          <Create
+            number={number}
+            datas={datas}
+            addButtonClickHandler={addButtonClickHandler}
+          />
         }
       />
       <Route
