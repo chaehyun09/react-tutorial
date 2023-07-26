@@ -21,7 +21,9 @@ export default function Detail({datas, deleteButtonClickHandler}) {
             padding: "12px",
           }}
         >
-          {data.title}
+          {/* ?로 optional chaining? 해줘야 함. 안해주면 예를 들어 사용자가 없는 아이디를 URL에 치면 에러가 뜨니까 에러처리*/}
+          {data?.title}
+          {/* {data && data.title} */}
         </h1>
         <div
           style={{
@@ -31,7 +33,7 @@ export default function Detail({datas, deleteButtonClickHandler}) {
             padding: "12px",
           }}
         >
-          {data.content}
+          {data?.content}
         </div>
         <div
           style={{

@@ -1,8 +1,11 @@
 import React from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -110,6 +113,7 @@ export default function Signup() {
                   color: "white",
                   cursor: "pointer",
                 }}
+                onClick={()=>navigate('/login')}
               >
                 로그인하러 가기
               </button>
