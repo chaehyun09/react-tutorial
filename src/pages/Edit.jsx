@@ -15,6 +15,8 @@ export default function Edit({datas, editButtonClickHandler}) {
     title: data.title,
     content: data.content,
     author: data.author,
+    // 어차피 다 넣을거면 spread operator
+    // id랑 작성자는 필요없음!
   })
 
   return (
