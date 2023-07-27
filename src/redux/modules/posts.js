@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { nanoid } from "nanoid";
 
 const initialState = [
   {
-    id: 1,
+    id: nanoid(),
     title: "제목1",
     content: "내용1입니다.",
     author: "김채현",
   },
   {
-    id: 2,
+    id: nanoid(),
     title: "제목2",
     content: "내용2입니다.",
     author: "스폰지밥",
   },
   {
-    id: 3,
+    id: nanoid(),
     title: "제목3",
     content: "내용3입니다.",
     author: "집게사장",

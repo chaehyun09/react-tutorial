@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
@@ -39,10 +39,10 @@ export default function Main() {
             추가
           </button>
         </div>
-        {posts.map((p) => (
+        {posts.map((post) => (
           // map으로 배열에 들어있는 요소들을 하나하나 돌면서 map안에 있는 콜백함수를 실행해줌
           <div
-            key={p.id}
+            key={post.id}
             style={{
               backgroundColor: "#EEEEEE",
               height: "100px",
@@ -58,7 +58,7 @@ export default function Main() {
                 // app.js에서 route path를 '/detail/:id'로 해주고
                 // 여기서 id값 넘겨준 다음
                 // 디테일 페이지에서 일치하는 애들끼리 그려주게
-                navigate(`/detail/${p.id}`);
+                navigate(`/detail/${post.id}`);
               }}
               style={{
                 flex: 4,
@@ -66,7 +66,7 @@ export default function Main() {
                 cursor: "pointer",
               }}
             >
-              <h2>{p.title}</h2>
+              <h2>{post.title}</h2>
               <p
                 style={{
                   width: "300px",
@@ -75,7 +75,7 @@ export default function Main() {
                   whiteSpace: "nowrap",
                 }}
               >
-                {p.content}
+                {post.content}
               </p>
             </div>
             <div
@@ -88,11 +88,19 @@ export default function Main() {
                 gap: "12px",
               }}
             >
-              <div>{p.author}</div>
+              <div>{post.author}</div>
               <div>
                 <button
                   onClick={() => {
-                    navigate(`/edit/${p.id}`);
+                    // navigate(`/edit/${p.id}`);
+                    // 이렇게 쓰면 로그인 안해도 URL로 수정페이지 막 접근할 수 있음
+                    // navigate는 아래처럼 쓰는 것도 가능
+                    // 로그인 회원이랑 작성자를 비교하려고
+                    navigate(`/edit`, {
+                      state: {
+                        post
+                      }
+                    });
                   }}
                   style={{
                     border: "none",
@@ -108,7 +116,7 @@ export default function Main() {
                 </button>
                 <button
                   onClick={() => {
-                    dispatch(deletePost(p.id))
+                    dispatch(deletePost(post.id))
                   }}
                   style={{
                     border: "none",

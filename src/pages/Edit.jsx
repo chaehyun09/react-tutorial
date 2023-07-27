@@ -1,24 +1,27 @@
 import React, { Fragment } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { editPost } from "../redux/modules/posts";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Edit() {
-  const {id} = useParams();
-  const posts = useSelector((state) => state.posts)
-  const post = posts.find((p) => p.id === Number(id))
+  // const {id} = useParams();
+  const {state} = useLocation();
+
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // 원래 props로 받던 애들을 useSelector로 가져와줌
+  // const posts = useSelector((state) => state.posts)
+
+  // const post = posts.find((p) => p.id === id)
+
   // 수정페이지에서 입력한 제목과 내용을 임시적으로 담아줄 state 필요
   const [editedPost, setEditedPost] = useState({
-    id: post.id,
-    title: post.title,
-    content: post.content,
-    author: post.author,
+    ...state.post
     // 어차피 다 넣을거면 spread operator
     // id랑 작성자는 필요없음!
   })
