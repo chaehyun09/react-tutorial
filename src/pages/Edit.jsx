@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { editPost } from "../redux/modules/posts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Edit() {
   // const {id} = useParams();
