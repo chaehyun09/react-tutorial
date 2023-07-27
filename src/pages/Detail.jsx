@@ -13,7 +13,7 @@ export default function Detail() {
   // url parameter에서 아이디값을 가지고와서 id로 선언해줌
   const {id} = useParams();
   // 위에서 선언해준 아이디와 아이디가 일치하는 데이터를 찾아서 선언
-  const post = posts.find((p) => p.id === Number(id))
+  const post = posts.find((p) => p.id === id)
   return (
     <>
       <Header />
@@ -48,7 +48,11 @@ export default function Detail() {
         >
           <button
             onClick={() => {
-              navigate(`/edit/${post.id}`);
+              navigate(`/edit`, {
+                state: {
+                  post
+                }
+              });
             }}
             style={{
               border: "none",

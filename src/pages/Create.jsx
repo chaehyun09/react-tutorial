@@ -4,14 +4,15 @@ import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../redux/modules/posts";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { nanoid } from "nanoid";
+
 
 export default function Create() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.posts)
   const [createdPost, setCreatedPost] = useState({
-    // id: number,
+    id: nanoid(),
     title: "",
     content: "",
     author: "작성자",
