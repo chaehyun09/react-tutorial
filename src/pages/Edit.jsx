@@ -3,18 +3,22 @@ import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { editPost } from "../redux/modules/posts";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Edit({datas, editButtonClickHandler}) {
+export default function Edit() {
   const {id} = useParams();
-  const data = datas.find((d) => d.id === Number(id))
+  const posts = useSelector((state) => state.posts)
+  const post = posts.find((p) => p.id === Number(id))
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // 수정페이지에서 입력한 제목과 내용을 임시적으로 담아줄 state 필요
-  const [editedData, setEditedData] = useState({
-    id: data.id,
-    title: data.title,
-    content: data.content,
-    author: data.author,
+  const [editedPost, setEditedPost] = useState({
+    id: post.id,
+    title: post.title,
+    content: post.content,
+    author: post.author,
     // 어차피 다 넣을거면 spread operator
     // id랑 작성자는 필요없음!
   })
@@ -33,7 +37,7 @@ export default function Edit({datas, editButtonClickHandler}) {
           onSubmit={(e) => {
             e.preventDefault();
             // 폼 제출 시 수정버튼클릭함수로 수정된 내용을 담은 state 전달
-            editButtonClickHandler(editedData)
+            dispatch(editPost(editedPost))
             navigate("/")
           }}
         >
@@ -49,10 +53,10 @@ export default function Edit({datas, editButtonClickHandler}) {
                 padding: "8px",
                 boxSizing: "border-box",
               }}
-              // editedData에 일단 원래 state 값들 담아줘서 화면에 나타나 있게
+              // editedPost에 일단 원래 state 값들 담아줘서 화면에 나타나 있게
               // 그리고 수정이 일어나면 setState로 수정되게끔
-              value={editedData.title}
-              onChange={(e) => setEditedData({...editedData, title: e.target.value})}
+              value={editedPost.title}
+              onChange={(e) => setEditedPost({...editedPost, title: e.target.value})}
             />
           </div>
           <div
@@ -72,8 +76,8 @@ export default function Edit({datas, editButtonClickHandler}) {
                 padding: "12px",
                 boxSizing: "border-box",
               }}
-              value={editedData.content}
-              onChange={(e) => setEditedData({...editedData, content: e.target.value})}
+              value={editedPost.content}
+              onChange={(e) => setEditedPost({...editedPost, content: e.target.value})}
             />
           </div>
           <button

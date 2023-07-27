@@ -3,13 +3,17 @@ import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { deletePost } from "../redux/modules/posts";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Detail({datas, deleteButtonClickHandler}) {
+export default function Detail() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts)
   // url parameter에서 아이디값을 가지고와서 id로 선언해줌
   const {id} = useParams();
   // 위에서 선언해준 아이디와 아이디가 일치하는 데이터를 찾아서 선언
-  const data = datas.find((d) => d.id === Number(id))
+  const post = posts.find((p) => p.id === Number(id))
   return (
     <>
       <Header />
@@ -22,8 +26,8 @@ export default function Detail({datas, deleteButtonClickHandler}) {
           }}
         >
           {/* ?로 optional chaining? 해줘야 함. 안해주면 예를 들어 사용자가 없는 아이디를 URL에 치면 에러가 뜨니까 에러처리*/}
-          {data?.title}
-          {/* {data && data.title} */}
+          {post?.title}
+          {/* {post && post.title} */}
         </h1>
         <div
           style={{
@@ -33,7 +37,7 @@ export default function Detail({datas, deleteButtonClickHandler}) {
             padding: "12px",
           }}
         >
-          {data?.content}
+          {post?.content}
         </div>
         <div
           style={{
@@ -44,7 +48,7 @@ export default function Detail({datas, deleteButtonClickHandler}) {
         >
           <button
             onClick={() => {
-              navigate(`/edit/${data.id}`);
+              navigate(`/edit/${post.id}`);
             }}
             style={{
               border: "none",
@@ -60,7 +64,7 @@ export default function Detail({datas, deleteButtonClickHandler}) {
           </button>
           <button
             onClick={() => {
-              deleteButtonClickHandler(data.id)
+              dispatch(deletePost(post.id))
               navigate("/")
             }}
             style={{
