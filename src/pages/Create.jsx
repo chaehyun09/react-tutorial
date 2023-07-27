@@ -3,15 +3,18 @@ import { useState } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
+import { createPost } from "../redux/modules/posts";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function Create({number, addButtonClickHandler}) {
+export default function Create() {
   const navigate = useNavigate();
-  // 추가 데이터 담아줄 state 선언
-  const [createdData, setCreatedData] = useState({
-    id: number,
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts)
+  const [createdPost, setCreatedPost] = useState({
+    // id: number,
     title: "",
     content: "",
-    author: "",
+    author: "작성자",
   })
   return (
     <>
@@ -26,8 +29,11 @@ export default function Create({number, addButtonClickHandler}) {
           }}
           onSubmit={(e) => {
             e.preventDefault();
-            addButtonClickHandler(createdData)
-            navigate('/')
+            if(createdPost.title === "" || createdPost.content === "") {
+              alert("제목과 내용을 모두 입력해주세요!")
+            } else {
+              dispatch(createPost(createdPost))
+              navigate('/')}
           }}
         >
           <div>
@@ -42,9 +48,9 @@ export default function Create({number, addButtonClickHandler}) {
                 padding: "8px",
                 boxSizing: "border-box",
               }}
-              value={createdData.title}
-              // 입력 일어나면 입력된 내용을 createdData의 title에 담아주기
-              onChange={(e) => setCreatedData({...createdData, title: e.target.value})}
+              value={createdPost.title}
+              // 입력 일어나면 입력된 내용을 createdPost의 title에 담아주기
+              onChange={(e) => setCreatedPost({...createdPost, title: e.target.value})}
             />
           </div>
           <div
@@ -64,9 +70,9 @@ export default function Create({number, addButtonClickHandler}) {
                 padding: "12px",
                 boxSizing: "border-box",
               }}
-              value={createdData.content}
-              // 입력 일어나면 입력된 내용을 createdData의 content에 담아주기
-              onChange={(e) => setCreatedData({...createdData, content: e.target.value})}
+              value={createdPost.content}
+              // 입력 일어나면 입력된 내용을 createdPost의 content에 담아주기
+              onChange={(e) => setCreatedPost({...createdPost, content: e.target.value})}
             />
           </div>
           <button
