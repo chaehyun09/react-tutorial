@@ -16,6 +16,7 @@ export default function Create() {
     title: "",
     content: "",
     author: "작성자",
+    // 여긴 id랑 author를 굳이 넣어줄 필요 없음! 제목과 내용만 입력받고, id랑 author는 밑에서 넣어주면 됨. 변하는 게 아니니까!
   })
   return (
     <>
