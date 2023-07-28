@@ -52,6 +52,7 @@ export default function Detail() {
                 state: {
                   post
                 }
+                // 콘솔 한 번 찍어보기
               });
             }}
             style={{
@@ -68,8 +69,9 @@ export default function Detail() {
           </button>
           <button
             onClick={() => {
-              dispatch(deletePost(post.id))
-              navigate("/")
+              if(window.confirm("정말 삭제하시겠습니까?")){
+                dispatch(deletePost(post.id))
+                navigate("/")}
             }}
             style={{
               border: "none",

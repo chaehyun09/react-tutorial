@@ -5,32 +5,8 @@ import Create from "./pages/Create";
 import Edit from "./pages/Edit";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import { useSelector } from "react-redux";
 
 function App() {
-  // const editButtonClickHandler = (post) => {
-  //   const newPosts = posts.map((p) => {
-  //     if (p.id === post.id) {
-  //       return { ...p, title: post.title, content: post.content };
-  //     } else {
-  //       return { ...p };
-  //     }
-  //   });
-  //   setPosts(newDatas);
-  // };
-
-  // const deleteButtonClickHandler = (id) => {
-  //   const newPosts = posts.filter((p) => {
-  //     return id !== p.id;
-  //   });
-  //   setPosts(newPosts);
-  // };
-
-  // const addButtonClickHandler = (post) => {
-  //   setPosts([...posts, post]);
-  //   number += 1;
-  // };
-
   return (
     // 페이지 이동에 사용되는 Route 태그를 위해선 Routes로 먼저 감싸야 한다.
     <Routes>

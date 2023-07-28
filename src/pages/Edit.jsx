@@ -10,14 +10,8 @@ export default function Edit() {
   // const {id} = useParams();
   const {state} = useLocation();
 
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // 원래 props로 받던 애들을 useSelector로 가져와줌
-  // const posts = useSelector((state) => state.posts)
-
-  // const post = posts.find((p) => p.id === id)
 
   // 수정페이지에서 입력한 제목과 내용을 임시적으로 담아줄 state 필요
   const [editedPost, setEditedPost] = useState({
@@ -81,6 +75,7 @@ export default function Edit() {
               }}
               value={editedPost.content}
               onChange={(e) => setEditedPost({...editedPost, content: e.target.value})}
+              // e.target.name 튜터님 코드
             />
           </div>
           <button

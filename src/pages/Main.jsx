@@ -39,7 +39,7 @@ export default function Main() {
             추가
           </button>
         </div>
-        {posts.map((post) => (
+        {posts?.map((post) => (
           // map으로 배열에 들어있는 요소들을 하나하나 돌면서 map안에 있는 콜백함수를 실행해줌
           <div
             key={post.id}
@@ -116,7 +116,9 @@ export default function Main() {
                 </button>
                 <button
                   onClick={() => {
+                    if(window.confirm("정말 삭제하시겠습니까?")){
                     dispatch(deletePost(post.id))
+                    navigate("/")}
                   }}
                   style={{
                     border: "none",
