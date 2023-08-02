@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { deletePost } from "../redux/modules/posts";
 import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 
 export default function Main() {
@@ -11,6 +13,14 @@ export default function Main() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts)
+  const [isLogIn, setIsLogIn] = useState(false)
+  const [userEmail, setUserEmail] = useState("")
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      user !== null ? setIsLogIn(true) : setIsLogIn(false)
+      setUserEmail(user.email)
+    })
+  }, [])
 
   return (
     <>
@@ -25,7 +35,9 @@ export default function Main() {
         >
           <button
             onClick={() => {
-              navigate("/create");
+              isLogIn?
+              navigate("/create")
+              : alert("로그인 후 이용해주세요!")
             }}
             style={{
               border: "none",
@@ -96,11 +108,13 @@ export default function Main() {
                     // 이렇게 쓰면 로그인 안해도 URL로 수정페이지 막 접근할 수 있음
                     // navigate는 아래처럼 쓰는 것도 가능
                     // 로그인 회원이랑 작성자를 비교하려고
+                    post.author === userEmail?
                     navigate(`/edit`, {
                       state: {
                         post
                       }
-                    });
+                    })
+                    : alert("작성한 게시물만 수정할 수 있습니다!")
                   }}
                   style={{
                     border: "none",
@@ -116,9 +130,11 @@ export default function Main() {
                 </button>
                 <button
                   onClick={() => {
-                    if(window.confirm("정말 삭제하시겠습니까?")){
-                    dispatch(deletePost(post.id))
-                    navigate("/")}
+                    if(post.author === userEmail){
+                      if(window.confirm("정말 삭제하시겠습니까?")){
+                        dispatch(deletePost(post.id))
+                        navigate("/")}
+                    } else (alert("다른 사용자가 작성한 게시물은 삭제할 수 없습니다!"))
                   }}
                   style={{
                     border: "none",

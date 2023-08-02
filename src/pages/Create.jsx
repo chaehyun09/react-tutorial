@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { createPost } from "../redux/modules/posts";
 import { useDispatch } from "react-redux";
 import { nanoid } from "nanoid";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 
 export default function Create() {
@@ -15,9 +17,17 @@ export default function Create() {
     id: nanoid(),
     title: "",
     content: "",
-    author: "작성자",
+    author: "",
     // 여긴 id랑 author를 굳이 넣어줄 필요 없음! 제목과 내용만 입력받고, id랑 author는 밑에서 넣어주면 됨. 변하는 게 아니니까!
   })
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+    setCreatedPost({...createdPost, author: user.email})
+    })
+  }, [])
+
+
   return (
     <>
       <Header />
@@ -35,6 +45,7 @@ export default function Create() {
               alert("제목과 내용을 모두 입력해주세요!")
             } else {
               dispatch(createPost(createdPost))
+              console.log(createdPost)
               navigate('/')}
           }}
         >
