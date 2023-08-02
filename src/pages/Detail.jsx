@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../common/Header";
 import Container from "../common/Container";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { deletePost } from "../redux/modules/posts";
 import { useDispatch, useSelector } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function Detail() {
   const navigate = useNavigate();
@@ -14,6 +16,14 @@ export default function Detail() {
   const {id} = useParams();
   // 위에서 선언해준 아이디와 아이디가 일치하는 데이터를 찾아서 선언
   const post = posts.find((p) => p.id === id)
+
+  const [userEmail, setUserEmail] = useState("")
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setUserEmail(user.email)
+    })
+  }, [])
+
   return (
     <>
       <Header />
@@ -48,12 +58,13 @@ export default function Detail() {
         >
           <button
             onClick={() => {
+              post.author === userEmail?
               navigate(`/edit`, {
                 state: {
                   post
                 }
-                // 콘솔 한 번 찍어보기
-              });
+              })
+              : alert("작성한 게시물만 수정할 수 있습니다!")
             }}
             style={{
               border: "none",
@@ -69,9 +80,11 @@ export default function Detail() {
           </button>
           <button
             onClick={() => {
-              if(window.confirm("정말 삭제하시겠습니까?")){
-                dispatch(deletePost(post.id))
-                navigate("/")}
+                if(post.author === userEmail){
+                      if(window.confirm("정말 삭제하시겠습니까?")){
+                        dispatch(deletePost(post.id))
+                        navigate("/")}
+                 } else (alert("다른 사용자가 작성한 게시물은 삭제할 수 없습니다!"))
             }}
             style={{
               border: "none",
