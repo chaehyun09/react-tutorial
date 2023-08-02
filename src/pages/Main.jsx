@@ -17,8 +17,11 @@ export default function Main() {
   const [userEmail, setUserEmail] = useState("")
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      user !== null ? setIsLogIn(true) : setIsLogIn(false)
-      setUserEmail(user.email)
+      if(user !== null){
+        setIsLogIn(true)
+        setUserEmail(user.email)
+      } else {setIsLogIn(false)}
+      
     })
   }, [])
 
