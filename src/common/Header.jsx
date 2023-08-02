@@ -7,9 +7,14 @@ import { auth } from "../firebase";
 export default function Header() {
   const navigate = useNavigate();
   const [isLogIn, setIsLogIn] = useState(false)
+  const [userEmail, setUserEmail] = useState("")
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      user !== null ? setIsLogIn(true) : setIsLogIn(false)
+      if(user !== null){
+        setIsLogIn(true)
+        setUserEmail(user.email)
+      } else {setIsLogIn(false)}
+      
     })
   }, [])
 
@@ -45,7 +50,7 @@ export default function Header() {
            gap: "12px",
          }}
        >
-         <button>이메일</button>
+         <span>{userEmail}</span>
          <button onClick={logOut}>로그아웃</button>
        </div>
        :

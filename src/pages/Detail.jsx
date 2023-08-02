@@ -20,10 +20,12 @@ export default function Detail() {
   const [userEmail, setUserEmail] = useState("")
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      setUserEmail(user.email)
+      if(user !== null){
+        setUserEmail(user.email)
+      }
+      
     })
   }, [])
-
   return (
     <>
       <Header />
